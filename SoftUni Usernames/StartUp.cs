@@ -1,9 +1,11 @@
-﻿using System;
-
-namespace SoftUni_Usernames
+﻿namespace SoftUni_Usernames
 {
+    using System;
+    
     class StartUp
     {
+        private const int Mod = 1000000007; // prime number
+
         static void Main(string[] args)
         {
 
@@ -11,30 +13,38 @@ namespace SoftUni_Usernames
             int D = int.Parse( Console.ReadLine());
             int L = int.Parse( Console.ReadLine());
             int U = int.Parse( Console.ReadLine());
-            double result = 0;
+            int factN = Factorial(N);
+            int factD = Factorial(D);
+            int factL = Factorial(L);
+            int factU = Factorial(U);
 
-            if (D+L+U>N)
+            if (D<0 || L<0 || U<0)
             {
-                Console.WriteLine(result);
+                Console.WriteLine(0);
                 return;
             }
-
-            if (D>0)
+            else if(D+L+U>N)
             {
-                result = result + Math.Pow(10, D);
+                Console.WriteLine(0);
+            }
+            else
+            {
+                var result = (factN / (factD * factL * factU))
+                    * Math.Pow(10, D) % Mod
+                    * Math.Pow(30, L) % Mod
+                    * Math.Pow(30, U) % Mod;
+
+                Console.WriteLine(result);
             }
 
-            if (L>0)
-            {
-                result = result * Math.Pow(30, L);
-            }
+        }
 
-            if (U>0)
-            {
-                result = result * Math.Pow(30, U);
-            }
-
-            Console.WriteLine(result);
+        private static int Factorial(int f)
+        {
+            if (f == 0)
+                return 1;
+            else
+                return (f * Factorial(f - 1)) % Mod;
         }
     }
 }
